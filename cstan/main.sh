@@ -30,6 +30,9 @@ source "${SMART_ENV_USER_DIR}/prog_web.sh"
 #  PYTHON
 source "${SMART_ENV_USER_DIR}/prog_py.sh"
 
+#  TYPESCRIPT
+source "${SMART_ENV_USER_DIR}/prog_ts.sh"
+
 #  SPECIFIC UTILITIES
 source "${SMART_ENV_USER_DIR}/specific_utils.sh"
 

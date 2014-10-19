@@ -1,7 +1,5 @@
 #!/bin/bash
 
 #   ---------------------------------------
-#    ATS DEVELOPMENT
+#    TYPESCRIPT
 #   ---------------------------------------
-
-alias ats='cd ~/01-prog/jlg/ATS; . Env/profile.sh'
