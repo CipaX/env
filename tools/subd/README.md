@@ -20,7 +20,8 @@ mkvirtualenv scrapping
 pip install Scrapy
 pip install rarfile
 
-## brew install unrar
+## Unrar
+brew install unrar
 
 
 # Schedule task with LaunchControl
