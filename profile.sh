@@ -1,35 +1,39 @@
 #!/bin/bash
 
-function _csProfMain()
-{
-   source "${CSPROF_DIR_ROOT}/common/gen_unix/profile.sh"
-   source "${CSPROF_DIR_ROOT}/common/gen_devel/profile.sh"
+HOSTNAME=$(hostname)
 
-   HOSTNAME_PROFILE="${CSPROF_DIR_ROOT}/perhost/${HOSTNAME}/profile.sh"
-   if [ -f ${HOSTNAME_PROFILE} ]; then
+if [ -n "$PS1" ]; then
+  IS_INTERACTIVE=1
+else
+  IS_INTERACTIVE=0
+fi
+
+
+function _smartProfMain()
+{
+   source "${SMARTPROF_DIR_ROOT}/config.sh"
+
+   SMARTPROF_REMOTE_USER_SUBDIR=${SMARTPROF_REMOTE_USER_SUBDIR:-${SMARTPROF_ROOT_HOSTNAME}}
+
+   source "${SMARTPROF_DIR_ROOT}/common/gen_unix/profile.sh"
+   source "${SMARTPROF_DIR_ROOT}/common/gen_devel/profile.sh"
+
+   SMARTPROF_HOSTNAME_PROFILE="${SMARTPROF_DIR_ROOT}/perhost/${HOSTNAME}/profile.sh"
+   if [ -f ${SMARTPROF_HOSTNAME_PROFILE} ]; then
       echo "### Loading profile for hostname [${HOSTNAME}]."
-      source ${HOSTNAME_PROFILE}
-      export PATH="${CSPROF_DIR_ROOT}/perhost/${HOSTNAME}/bin":$PATH
+      source ${SMARTPROF_HOSTNAME_PROFILE}
+      export PATH="${SMARTPROF_DIR_ROOT}/perhost/${HOSTNAME}/bin":$PATH
    else
       echo "### There is no profile for hostname [${HOSTNAME}]."
    fi
 }
 
-if [[ -z ${CSPROF_DIR_ROOT} ]]; then
-   export CSPROF_DIR_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-   HOSTNAME=$(hostname)
-   ROOT_HOSTNAME="Ciprians-iMac.local"
-
-   if [ -n "$PS1" ]; then
-      IS_INTERACTIVE=1
-   else
-      IS_INTERACTIVE=0
-   fi
+if [[ -z ${SMARTPROF_DIR_ROOT} ]]; then
+   export SMARTPROF_DIR_ROOT="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
    if [ $IS_INTERACTIVE == 1 ]; then
-      _csProfMain
+      _smartProfMain
    else
-      _csProfMain > /dev/null
+      _smartProfMain > /dev/null
    fi
 fi

@@ -1,46 +1,46 @@
 #!/bin/bash
 
-if [[ -z ${CSPROF_DIR_PERHOST_CIP_MAC} ]]; then
-   export CSPROF_DIR_PERHOST_CIP_MAC="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [[ -z ${SMARTPROF_DIR_PERHOST_CIP_MAC} ]]; then
+   export SMARTPROF_DIR_PERHOST_CIP_MAC="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
    #  Environment Configuration
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/env_conf.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/env_conf.sh"
 
    #  Make Terminal Better (remapping defaults and adding functionality)
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/terminal.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/terminal.sh"
 
    #  File and Folder Management
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/files.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/files.sh"
 
    #  SEARCHING
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/search.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/search.sh"
 
    #  PROCESS MANAGEMENT
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/pids.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/pids.sh"
 
    #  NETWORKING
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/net.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/net.sh"
 
    #  SYSTEMS OPERATIONS & INFORMATION
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/osinfo.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/osinfo.sh"
 
    #  PROGRAMMING - GENERAL
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/prog.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/prog.sh"
 
    #  WEB DEVELOPMENT
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/prog_web.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/prog_web.sh"
 
    #  PYTHON
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/prog_py.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/prog_py.sh"
 
    #  TYPESCRIPT
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/prog_ts.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/prog_ts.sh"
 
    #  SPECIFIC UTILITIES
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/specific_utils.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/specific_utils.sh"
 
    #  ATS DEVELOPMENT
-   source "${CSPROF_DIR_PERHOST_CIP_MAC}/proj_ats.sh"
+   source "${SMARTPROF_DIR_PERHOST_CIP_MAC}/proj_ats.sh"
 
 
    #  Aliases

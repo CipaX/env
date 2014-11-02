@@ -1,12 +1,12 @@
 #!/bin/bash
 
-if [[ -z ${CSPROF_DIR_COMMON_GEN_LINUX} ]]; then
-   export CSPROF_DIR_COMMON_GEN_LINUX="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
+   export SMARTPROF_DIR_COMMON_GEN_LINUX="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
    export EDITOR=gedit
    export WINEDITOR=gedit
 
-   export PATH=${CSPROF_DIR_COMMON_GEN_LINUX}/bin:$PATH
+   export PATH=${SMARTPROF_DIR_COMMON_GEN_LINUX}/bin:$PATH
 
    function _universalMd5SumCmd()
    {
@@ -71,24 +71,24 @@ if [[ -z ${CSPROF_DIR_COMMON_GEN_LINUX} ]]; then
    {
       echo "### Compressing"
 
-      cd ${CSPROF_DIR_ROOT}/..
-      tar czvf csprof.tgz "env" > /dev/null # <- assuming the csprof environment is stored in a folder called "env"
+      cd ${SMARTPROF_DIR_ROOT}/..
+      tar czvf smartprof.tgz --exclude '.?*' "env" > /dev/null # <- assuming the smartprof environment is stored in a folder called "env"
 
       if [[ $# -eq 1 ]]; then
          ss_pub_key $1
 
-         echo "### Creating a cstan folder remotely in the remote HOME"
+         echo "### Creating am user sub-folder remotely in the remote HOME"
          REMOTE_HOME="$(ssh $1 'echo $HOME')"
-         REMOTE_CS="${REMOTE_HOME}/cstan"
-         ssh $1 "mkdir -p \"${REMOTE_CS}\""
+         REMOTE_USER_SUBDIR="${REMOTE_HOME}/${SMARTPROF_REMOTE_USER_SUBDIR}"
+         ssh $1 "mkdir -p \"${REMOTE_USER_SUBDIR}\""
 
          echo "### Transferring the archive, extracting and removing the remote archive copy"
-         scp csprof.tgz "$1:${REMOTE_CS}"
-         ssh $1 "cd \"${REMOTE_CS}\" && tar xvf csprof.tgz > /dev/null && rm -rf csprof.tgz"
+         scp smartprof.tgz "$1:${REMOTE_USER_SUBDIR}"
+         ssh $1 "cd \"${REMOTE_USER_SUBDIR}\" && tar xvf smartprof.tgz > /dev/null && rm -rf smartprof.tgz"
          echo "### Done"
 
          echo "### Removing the local archive"
-         rm -rf csprof.tgz
+         rm -rf smartprof.tgz
       else
          echo "pp_copy user@host"
       fi
@@ -97,24 +97,24 @@ if [[ -z ${CSPROF_DIR_COMMON_GEN_LINUX} ]]; then
    function pp_copy_if_newer()
    {
       if [[ $# -eq 1 ]]; then
-         cd ${CSPROF_DIR_ROOT}
+         cd ${SMARTPROF_DIR_ROOT}
 
-         if [[ ${HOSTNAME} == ${ROOT_HOSTNAME} ]]; then
+         if [[ ${HOSTNAME} == ${SMARTPROF_ROOT_HOSTNAME} ]]; then
             echo "### We are in ROOT"
 
             # Create an md5 file for the current profile snapshot
-            find . | xargs ls -l | grep -v md5sum.txt | eval "$(_universalMd5SumCmd)" > md5sum.txt.tmp
+            find . \( ! -regex '.*/\..*' \) | xargs ls -l | grep -v md5sum.txt | eval "$(_universalMd5SumCmd)" > md5sum.txt.tmp
             if [ ! -f "md5sum.txt.tmp" ]; then
                echo "### Error: md5sum.txt.tmp was not created."
                return
             fi
 
             # Compare the newly created md5 with the last existing one
-            MD5_DIFFERENT=0
+            MD5_DIFFERENT=1
             if [ -f "md5sum.txt" ]; then
                diff "md5sum.txt" "md5sum.txt.tmp" > /dev/null
-               if [ $? -ne 0 ]; then
-                  MD5_DIFFERENT=1
+               if [ $? -eq 0 ]; then
+                  MD5_DIFFERENT=0
                fi
             fi
 
@@ -128,7 +128,7 @@ if [[ -z ${CSPROF_DIR_COMMON_GEN_LINUX} ]]; then
          if [ -f "md5sum.txt" ]; then
             ss_pub_key $1
 
-            REMOTE_TIMESTAMP_CMD="$(_universalTimestampOrNullIfMissingCmd \$HOME/cstan/env/md5sum.txt)"
+            REMOTE_TIMESTAMP_CMD="$(_universalTimestampOrNullIfMissingCmd \$HOME/${SMARTPROF_REMOTE_USER_SUBDIR}/env/md5sum.txt)"
             REMOTE_DATE="$(ssh $1 ${REMOTE_TIMESTAMP_CMD})"
 
             LOCAL_TIMESTAMP_CMD="$(_universalTimestampOrNullIfMissingCmd md5sum.txt)"
@@ -142,7 +142,7 @@ if [[ -z ${CSPROF_DIR_COMMON_GEN_LINUX} ]]; then
             fi
          else
             echo "### Error: local md5sum.txt does not exist."
-            echo "### Begin distributing the profile from ${ROOT_HOSTNAME} or from a machine that has a profile with an md5sum.txt."
+            echo "### Begin distributing the profile from ${SMARTPROF_ROOT_HOSTNAME} or from a machine that has a profile with an md5sum.txt."
             echo "### Aborting."
             return
          fi
@@ -160,7 +160,7 @@ if [[ -z ${CSPROF_DIR_COMMON_GEN_LINUX} ]]; then
          pp_copy_if_newer $1
 
          REMOTE_HOME="$(ssh $1 'echo $HOME')"
-         REMOTE_RC="${REMOTE_HOME}/cstan/env/profile_with_bashrc.sh"
+         REMOTE_RC="${REMOTE_HOME}/${SMARTPROF_REMOTE_USER_SUBDIR}/env/profile_with_bashrc.sh"
          echo "ssh -X -t $1 \"bash --rcfile ${REMOTE_RC} -l\""
          ssh -X -t $1 "bash --rcfile ${REMOTE_RC} -i"
       else

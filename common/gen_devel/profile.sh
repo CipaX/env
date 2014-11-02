@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [[ -z ${CSPROF_DIR_COMMON_GEN_DEVEL} ]]; then
-   export CSPROF_DIR_COMMON_GEN_DEVEL="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [[ -z ${SMARTPROF_DIR_COMMON_GEN_DEVEL} ]]; then
+   export SMARTPROF_DIR_COMMON_GEN_DEVEL="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
    HL_ERROR="egrep --color \"^|\: error\: |\: note\: \""
    TO_STD_OUT_HL_ERROR="2>&1 | $HL_ERROR"

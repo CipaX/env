@@ -1,7 +1,7 @@
 #!/bin/bash
 
-if [[ -z ${CSPROF_DIR_PERHOST_CIP_MAC_CENTOS} ]]; then
-   export CSPROF_DIR_PERHOST_CIP_MAC_CENTOS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+if [[ -z ${SMARTPROF_DIR_PERHOST_CIP_MAC_CENTOS} ]]; then
+   export SMARTPROF_DIR_PERHOST_CIP_MAC_CENTOS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
    
    source /opt/rh/devtoolset-2/enable
 
