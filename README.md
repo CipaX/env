@@ -1,2 +1,2 @@
-mac_env
-=======
+smart environment
+=================
