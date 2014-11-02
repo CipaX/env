@@ -2,7 +2,7 @@
 
 function _csProfMain()
 {
-   source "${CSPROF_DIR_ROOT}/common/gen_linux/profile.sh"
+   source "${CSPROF_DIR_ROOT}/common/gen_unix/profile.sh"
    source "${CSPROF_DIR_ROOT}/common/gen_devel/profile.sh"
 
    HOSTNAME_PROFILE="${CSPROF_DIR_ROOT}/perhost/${HOSTNAME}/profile.sh"
