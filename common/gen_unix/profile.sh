@@ -3,10 +3,67 @@
 if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
    export SMARTPROF_DIR_COMMON_GEN_LINUX="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+   ###########
+   # Terminal
+   ###########
+
+   export CLICOLOR=1
+   #export LSCOLORS=ExFxBxDxCxegedabagacad    # for light themed terminals
+   export LSCOLORS=GxFxCxDxBxegedabagaced    # for dark themed terminals
+
+   # Entire path in red:
+   #PS1='\[\e[0;33m\]\u\[\e[0m\]@\[\e[0;32m\]\h\[\e[0m\]:\[\e[0;31m\]$(pwd)\[\e[0m\] \n\$ '
+   # Home relative path in orange:
+   PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\n\$ "
+
+   PS2='\$ '
+
+   ####################
+   # Aliases and utils
+   ####################
+
+   alias cp='cp -iv'                           # Preferred 'cp' implementation
+   alias mv='mv -iv'                           # Preferred 'mv' implementation
+   alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
+   alias less='less -FSRXc'                    # Preferred 'less' implementation
+   alias which='type -p'                       # Always better than which
+
+   #  lr:  Full Recursive Directory Listing
+   #   -----------------------------------------------------
+   alias xx_lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
+
+   #   findPid: find out the pid of a specified process
+   #   -----------------------------------------------------
+   #       Note that the command name can be specified via a regex
+   #       E.g. findPid '/d$/' finds pids of all processes with names ending in 'd'
+   #       Without the 'sudo' it will only find processes of the current user
+   #   -----------------------------------------------------
+   xx_findPid () { lsof -t -c "$@" ; }
+
+   #   Helper for avoiding duplicates when addind items to PATH
+   #   ------------------------------------------------------------
+   xx_pathPrepend() {
+       if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
+           export PATH=$1:$PATH
+       fi
+   }
+
+   ########################
+   # Environment variables
+   ########################
+
    export EDITOR=gedit
    export WINEDITOR=gedit
 
-   export PATH=${SMARTPROF_DIR_COMMON_GEN_LINUX}/bin:$PATH
+   #######
+   # Path
+   #######
+
+   xx_pathPrepend "${SMARTPROF_DIR_COMMON_GEN_LINUX}/bin"
+
+   ################################
+   # Distributable profile and ssh
+   ################################
 
    function _universalMd5SumCmd()
    {
@@ -169,4 +226,3 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
    }
 
 fi
-
