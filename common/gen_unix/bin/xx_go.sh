@@ -25,8 +25,6 @@ else
 	else
 		MATCH=$(cd ${_BASE} > /dev/null; xx_match_dir.sh $@)
 
-      echo "XXX CS MATCH: $MATCH"
-
 		if [ -n "${MATCH}" ]; then
 			cd "${_BASE}/${MATCH}"
 			pwd
