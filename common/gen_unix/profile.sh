@@ -2,6 +2,7 @@
 
 if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
    export SMARTPROF_DIR_COMMON_GEN_LINUX="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+   alias pp_e_gen_unix="${SMARTPROF_EDITOR} ${BASH_SOURCE[0]} &"
 
    ###########
    # Terminal
@@ -27,6 +28,7 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
    alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
    alias less='less -FSRXc'                    # Preferred 'less' implementation
    alias which='type -p'                       # Always better than which
+   alias xx='. xx_go.sh'                       # Easy navigation
 
    #  lr:  Full Recursive Directory Listing
    #   -----------------------------------------------------
@@ -231,5 +233,4 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
          echo "ss_prof user@host"
       fi
    }
-
 fi
