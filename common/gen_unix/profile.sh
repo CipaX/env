@@ -42,10 +42,17 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
 
    #   Helper for avoiding duplicates when addind items to PATH
    #   ------------------------------------------------------------
-   xx_pathPrepend() {
-       if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
-           export PATH=$1:$PATH
-       fi
+   xx_pathPrepend()
+   {
+      IFS=":" read -a NEW_PATH_PARTS <<< "$1"
+      
+      for (( IDX=${#NEW_PATH_PARTS[@]}-1 ; IDX>=0 ; IDX-- )) ; do
+         NEW_PATH_PART=${NEW_PATH_PARTS[IDX]}
+         
+         if ! echo $PATH | egrep -q "(^|:)${NEW_PATH_PART}($|:)" ; then
+            export PATH=${NEW_PATH_PART}:$PATH
+         fi
+      done
    }
 
    ########################
