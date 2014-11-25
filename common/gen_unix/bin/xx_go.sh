@@ -16,19 +16,23 @@ if [ "$#" -eq 1 ] && [ "$1" == "-h" ]; then
 	echo "  ${_CMD} S Cfg  # may change folder to Server/Cfg"
 	echo "  ${_CMD} SCfg   # same as ${_CMD} S Cfg"
 else
-   _BASE_RAW=${!SMARTPROF_GO_BASE_VAR}
-   _BASE=${_BASE_RAW:-${HOME}}
+   function getHome()
+   {
+      echo ${HOME}
+   }
+
+   BASE_GET_FUNC=${SMARTPROF_GO_BASE_GET_FUNC:-'getHome'}
+   BASE="$($BASE_GET_FUNC)"
 
 	if [ "$#" -eq 0 ]; then
-		cd ${_BASE}
+		cd ${BASE}
 		pwd
 	else
-		MATCH=$(cd ${_BASE} > /dev/null; xx_match_dir.sh $@)
+		MATCH=$(cd ${BASE} > /dev/null; xx_match_dir.sh $@)
 
 		if [ -n "${MATCH}" ]; then
-			cd "${_BASE}/${MATCH}"
+			cd "${BASE}/${MATCH}"
 			pwd
-			echo "cd ${_BASE}/${MATCH}"
 		else
 			echo "No folder matches the given pattern" 1>&2
 		fi
