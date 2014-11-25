@@ -61,19 +61,12 @@ function printAndExitIfNotEmpty()
 	fi
 }
 
-function findPatternAndProcessResult()
-{
-   PATTERN=$1
-
-   MATCH=$(find ${PATH_IT} -type d -regex "${PATTERN}" -print0 | getMinDir)
-   printAndExitIfNotEmpty ${MATCH}
-}
-
-
 PATTERN=$(getSimplePattern "$@")
-findPatternAndProcessResult ${PATTERN}
+MATCH=$(find . -type d -regex "${PATTERN}" -print0 | getMinDir)
+printAndExitIfNotEmpty ${MATCH}
 
 PATTERN=$(getPartsPattern "$@")
-findPatternAndProcessResult ${PATTERN}
+MATCH=$(find . -type d -regex "${PATTERN}" -print0 | getMinDir)
+printAndExitIfNotEmpty ${MATCH}
 
 echo "No matches found." 1>&2
