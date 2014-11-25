@@ -2,7 +2,7 @@
 
 if [ "$#" -eq 0 ] || ([ "$#" -eq 1 ] && [ "$1" == "-h" ]); then
 	CMD=$(basename $0)
-	echo "usage: ${CMD} <pattern>"
+	echo "usage: ${CMD} <pattern> [path1 [path2 [...]]"
 	echo ""
 	echo "Matches the given pattern within the current directory subtree and outputs the first shortest path match."
 	echo "  First the exact <pattern>, with added leading and trailing wildcards is matched."
@@ -61,13 +61,19 @@ function printAndExitIfNotEmpty()
 	fi
 }
 
+function findPatternAndProcessResult()
+{
+   PATTERN=$1
+
+   MATCH=$(find ${PATH_IT} -type d -regex "${PATTERN}" -print0 | getMinDir)
+   printAndExitIfNotEmpty ${MATCH}
+}
+
 
 PATTERN=$(getSimplePattern "$@")
-MATCH=$(find . -type d -regex "${PATTERN}" -print0 | getMinDir)
-printAndExitIfNotEmpty ${MATCH}
+findPatternAndProcessResult ${PATTERN}
 
 PATTERN=$(getPartsPattern "$@")
-MATCH=$(find . -type d -regex "${PATTERN}" -print0 | getMinDir)
-printAndExitIfNotEmpty ${MATCH}
+findPatternAndProcessResult ${PATTERN}
 
 echo "No matches found." 1>&2
