@@ -12,6 +12,7 @@ fi
 function _smartProfMain()
 {
    source "${SMARTPROF_DIR_ROOT}/config.sh"
+   alias pp_e_config="${SMARTPROF_EDITOR} ${SMARTPROF_DIR_ROOT}/config.sh &"
 
    SMARTPROF_REMOTE_USER_SUBDIR=${SMARTPROF_REMOTE_USER_SUBDIR:-${SMARTPROF_ROOT_HOSTNAME}}
 
@@ -36,4 +37,7 @@ if [[ -z ${SMARTPROF_DIR_ROOT} ]]; then
    else
       _smartProfMain > /dev/null
    fi
+
+   # Alias defined at the end, because the ${SMARTPROF_EDITOR} is missing before.
+   alias pp_e_root="${SMARTPROF_EDITOR} ${BASH_SOURCE[0]} &"
 fi
