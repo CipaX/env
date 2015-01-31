@@ -48,7 +48,7 @@ class Common:
          finalList.append(listItem)
 
       with open(filePath, "w") as destF:
-         json.dump(finalList, destF)
+         json.dump(finalList, destF, sort_keys=True, indent=3, separators=(',', ': '))
 
    @staticmethod
    def JoinIndexFiles(destNewFilePath, withOldFilePath):
