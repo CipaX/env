@@ -20,6 +20,10 @@ mkvirtualenv scrapping
 pip install Scrapy
 pip install rarfile
 
+## Add cspy library to the scrapping virtual env
+cd ~/env/perhost/Ciprians-iMac.local/cspy
+python setup.py develop
+
 ## Unrar
 brew install unrar
 

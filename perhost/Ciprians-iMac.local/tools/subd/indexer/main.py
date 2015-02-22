@@ -1,4 +1,4 @@
-from csutil.log import *
+from csbase import log
 from common import *
 import json
 import subprocess
@@ -6,7 +6,7 @@ import os
 import re
 
 def indexUpdate(args):
-   printInfo("Updating index. Please wait ...");
+   log.printInfo("Updating index. Please wait ...");
 
    olderIndexExists = os.path.isfile(Common.C_SUBS_INDEX_PATH)
 
@@ -22,16 +22,16 @@ def indexUpdate(args):
 
    if retCode != 0:
       if None == retCode:
-         printError("Internal: Scrapy didn't finish executing.")
+         log.printError("Internal: Scrapy didn't finish executing.")
       elif retCode > 0:
-         printError("Scrapy returned with exit code:", retCode)
+         log.printError("Scrapy returned with exit code:", retCode)
       else:
-         printError("Scrapy interrupted. Signal:", -retCode)
+         log.printError("Scrapy interrupted. Signal:", -retCode)
 
       if (None != out) and ("" != out):
-         printError("Scrapy stdout: \n", out)
+         log.printError("Scrapy stdout: \n", out)
       if (None != err) and ("" != err):
-         printError("Scrapy stderr: \n", err)
+         log.printError("Scrapy stderr: \n", err)
 
       return
 

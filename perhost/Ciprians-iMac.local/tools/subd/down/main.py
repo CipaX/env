@@ -1,4 +1,4 @@
-from csutil.log import *
+from csbase import log
 from common import *
 import zipfile
 import rarfile
@@ -20,17 +20,17 @@ def downOne(args):
    try:
       indexId = int(args.index_id)
    except ValueError:
-      printError("The index_id argument is not in the expected format. Use the value on the left returned by 'index list'")
+      log.printError("The index_id argument is not in the expected format. Use the value on the left returned by 'index list'")
       return
 
    if indexId < 0:
-      printError("The index_id argument is negative")
+      log.printError("The index_id argument is negative")
       return
 
    indexDict = Common.GetDictFromIndexFile(Common.C_SUBS_INDEX_PATH)
 
    if indexId >= len(indexDict):
-      printError("The index_id argument [" + str(indexId) + "] is out of range [0; " + str(len(indexDict)) + "]")
+      log.printError("The index_id argument [" + str(indexId) + "] is out of range [0; " + str(len(indexDict)) + "]")
       return
 
    itemKey = indexDict.keys()[indexId]
@@ -40,7 +40,7 @@ def downOne(args):
 
 
 def downItem(item):
-   printInfo("Downloading " + Common.ItemToText(item) + " ...")
+   log.printInfo("Downloading " + Common.ItemToText(item) + " ...")
 
    destFolder = os.path.join(Common.C_SUBS_DIR, item["title"])
 
@@ -58,7 +58,7 @@ def downItem(item):
    unidentifiedFolder = os.path.join(destFolder, Common.C_UNIDENTIFIED_FILES_FOLDER)
    Common.MkdirP(unidentifiedFolder)
 
-   printInfo("Extracting file [" + downloadedFilePath + "] ...")
+   log.printInfo("Extracting file [" + downloadedFilePath + "] ...")
 
    fileType = getArchiveType(downloadedFilePath)
    if "zip" == fileType:
@@ -66,7 +66,7 @@ def downItem(item):
    elif "rar" == fileType:
       unrar(downloadedFilePath, unidentifiedFolder)
    else:
-      printError("Unknown file type.")
+      log.printError("Unknown file type.")
 
 
 def downloadUrlToFile(url, folderPath):
@@ -83,7 +83,7 @@ def downloadUrlToFile(url, folderPath):
    if None != fileNameMatch:
       fileName = fileNameMatch.group(1)
    else:
-      printWarning("File name not specified in content-headers. Using last URL segment.")
+      log.printWarning("File name not specified in content-headers. Using last URL segment.")
       fileName = os.path.join(folderPath, url.split('/')[-1])
 
    filePath = os.path.join(folderPath, fileName)
