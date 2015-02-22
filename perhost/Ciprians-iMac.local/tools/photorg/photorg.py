@@ -341,7 +341,7 @@ def main(iPath):
    print("Reversal actions:")
 
    for srcDir in srcDirPathSet:
-      print(" mkdir -p " + removedDir)
+      print(" mkdir -p " + srcDir)
 
    revSrcFilePathList = sorted(mvMap.keys(), reverse=True)
    for srcFilePath in revSrcFilePathList:
