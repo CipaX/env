@@ -43,7 +43,7 @@ def removeUnwantedFiles(iDirPath):
             os.remove(filePath)
 
 def main(iPath):
-   mediaFileExtensions = ["jpg", "png", "gif", "mov", "mp4"]
+   mediaFileExtensions = ["jpg", "png", "gif", "mov", "mp4", "m4v"]
    extrasFileExtensions = ["aae"]
 
    # Prepare lookup variables
@@ -89,6 +89,10 @@ def main(iPath):
                'extrasFileNames': extrasFileNames
             }
 
+   if not imageFileDict:
+      printInfo("No recognized image/video file found.")
+      return
+
 
    # Gather exif metadata
    #
@@ -120,13 +124,15 @@ def main(iPath):
       'EXIF:CreateDate',
       'EXIF:ModifyDate',
       'H264:DateTimeOriginal',
+      'QuickTime:ContentCreateDate',
+      'QuickTime:CreationDate',
+      'QuickTime:CreationDate-ron-RO',
       'QuickTime:CreateDate',
       'QuickTime:TrackCreateDate',
       'QuickTime:MediaCreateDate',
       'QuickTime:ModifyDate',
       'QuickTime:TrackModifyDate',
       'QuickTime:MediaModifyDate',
-      'QuickTime:CreationDate',
       'File:FileModifyDate'
    ]
 
