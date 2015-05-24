@@ -47,9 +47,6 @@ if [[ -z ${SMARTPROF_DIR_PERHOST_CIP_MAC} ]]; then
    source "${SMARTPROF_DIR_ROOT}/perhost/cipax-home-common/net.sh"   
 
    #  Aliases
-   alias ss_centos6='ss_prof cstan@192.168.1.150'
-   alias ss_centos7='ss_prof cstan@192.168.1.151'
-   alias ss_nas='ss_prof root@192.168.1.10'
    alias ats='source ~/01-prog/jlg/ATS/env/profile.sh'
 fi
 
