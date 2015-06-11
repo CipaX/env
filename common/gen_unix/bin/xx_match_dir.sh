@@ -1,5 +1,7 @@
 #!/bin/bash
 
+BASE="$(pwd)"
+
 if [ "$#" -eq 0 ] || ([ "$#" -eq 1 ] && [ "$1" == "-h" ]); then
 	CMD=$(basename $0)
 	echo "usage: ${CMD} <pattern> [path1 [path2 [...]]"
@@ -70,12 +72,11 @@ function getPartsPattern()
 function printAndExitIfNotEmpty()
 {
 	if [ -n "$1" ]; then
-		echo $@
+		echo "${BASE}/$1"
 		exit
 	fi
 }
 
-BASE="$(pwd)"
 INDEX_KEY=""
 INDEX_PATH=""
 INDEX_LENGTH=10000
@@ -83,7 +84,7 @@ for ENTRY in $(cat ~/.smartgo_index/__index_registry); do
    _KEY="$(echo $ENTRY | cut -d: -f1)"
    _PATH="$(echo $ENTRY | cut -d: -f2)"
 
-   if [[ ${_PATH} == *"${BASE}"* ]]; then
+   if [[ ${BASE} == *"${_PATH}"* ]]; then
       if [[ ${#_PATH} -lt ${INDEX_LENGTH} ]]; then
          INDEX_KEY=${_KEY}
          INDEX_PATH=${_PATH}
