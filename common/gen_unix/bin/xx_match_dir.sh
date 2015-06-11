@@ -15,7 +15,7 @@ if [ "$#" -eq 0 ] || ([ "$#" -eq 1 ] && [ "$1" == "-h" ]); then
 	exit
 fi
 
-function getMinDir()
+function getMinDirFromFindWithPipe()
 {
 	local MIN_LEN=10000
 	local MIN_DIR=""
@@ -32,6 +32,20 @@ function getMinDir()
 	done
 
 	echo ${MIN_DIR}
+}
+
+function getMinDirFromList()
+{
+   DIR=""
+   LENGTH=10000
+   for _DIR in $@; do
+      if [[ ${#_DIR} -lt ${LENGTH} ]]; then
+         DIR=${_DIR}
+         let LENGTH=${#DIR}
+      fi
+   done
+
+   echo ${DIR}
 }
 
 function getSimplePattern()
@@ -61,12 +75,52 @@ function printAndExitIfNotEmpty()
 	fi
 }
 
-PATTERN=$(getSimplePattern "$@")
-MATCH=$(find . -type d -regex "${PATTERN}" -print0 | getMinDir)
-printAndExitIfNotEmpty ${MATCH}
+BASE="$(pwd)"
+INDEX_KEY=""
+INDEX_PATH=""
+INDEX_LENGTH=10000
+for ENTRY in $(cat ~/.smartgo_index/__index_registry); do
+   _KEY="$(echo $ENTRY | cut -d: -f1)"
+   _PATH="$(echo $ENTRY | cut -d: -f2)"
 
-PATTERN=$(getPartsPattern "$@")
-MATCH=$(find . -type d -regex "${PATTERN}" -print0 | getMinDir)
-printAndExitIfNotEmpty ${MATCH}
+   if [[ ${_PATH} == *"${BASE}"* ]]; then
+      if [[ ${#_PATH} -lt ${INDEX_LENGTH} ]]; then
+         INDEX_KEY=${_KEY}
+         INDEX_PATH=${_PATH}
+         let INDEX_LENGTH=${#INDEX_PATH}
+      fi
+   fi
+done
+
+if [[ -n ${INDEX_KEY} ]]; then
+   #
+   # Index EXISTS
+   #
+
+   PATTERN=$(getSimplePattern "$@")
+   MATCHES=$(cat ~/.smartgo_index/"${INDEX_KEY}" | egrep "${PATTERN}")
+   MATCH=$(getMinDirFromList ${MATCHES})
+   printAndExitIfNotEmpty ${MATCH}
+
+   PATTERN=$(getPartsPattern "$@")
+   MATCHES=$(cat ~/.smartgo_index/"${INDEX_KEY}" | egrep "${PATTERN}")
+   MATCH=$(getMinDirFromList ${MATCHES})
+   printAndExitIfNotEmpty ${MATCH}
+
+else
+   #
+   # Index DOES NOT EXIST
+   #
+
+   echo "No index found. Proceding with live search." 1>&2
+
+   PATTERN=$(getSimplePattern "$@")
+   MATCH=$(find -L . -type d -regex "${PATTERN}" -print0 | getMinDirFromFindWithPipe)
+   printAndExitIfNotEmpty ${MATCH}
+
+   PATTERN=$(getPartsPattern "$@")
+   MATCH=$(find -L . -type d -regex "${PATTERN}" -print0 | getMinDirFromFindWithPipe)
+   printAndExitIfNotEmpty ${MATCH}
+fi
 
 echo "No matches found." 1>&2
