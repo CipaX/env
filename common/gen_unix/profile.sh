@@ -40,11 +40,11 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
    #       E.g. findPid '/d$/' finds pids of all processes with names ending in 'd'
    #       Without the 'sudo' it will only find processes of the current user
    #   -----------------------------------------------------
-   xx_findPid () { lsof -t -c "$@" ; }
+   function xx_findPid () { lsof -t -c "$@" ; }
 
    #   Helper for avoiding duplicates when addind items to PATH
    #   ------------------------------------------------------------
-   xx_pathPrepend()
+   function xx_pathPrepend()
    {
       IFS=":" read -a NEW_PATH_PARTS <<< "$1"
       
@@ -55,6 +55,15 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
             export PATH=${NEW_PATH_PART}:$PATH
          fi
       done
+   }
+
+   #   Outputs the script file and line where a function is located
+   #   ------------------------------------------------------------
+   function xx_where_func()
+   {
+      shopt -s extdebug
+      declare -F $@
+      shopt -u extdebug
    }
 
    ########################
