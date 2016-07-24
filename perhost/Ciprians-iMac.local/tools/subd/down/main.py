@@ -6,6 +6,7 @@ import urllib2
 import subprocess
 import os
 import re
+import traceback
 import sys
 
 def downWatch(args):
@@ -61,12 +62,19 @@ def downItem(item):
    log.printInfo("Extracting file [" + downloadedFilePath + "] ...")
 
    fileType = getArchiveType(downloadedFilePath)
-   if "zip" == fileType:
-      unzip(downloadedFilePath, unidentifiedFolder)
-   elif "rar" == fileType:
-      unrar(downloadedFilePath, unidentifiedFolder)
-   else:
-      log.printError("Unknown file type.")
+   try:
+      if "zip" == fileType:
+         unzip(downloadedFilePath, unidentifiedFolder)
+      elif "rar" == fileType:
+         unrar(downloadedFilePath, unidentifiedFolder)
+      else:
+         log.printError("Unknown file type.")
+   except Exception as e:
+      log.printError("Error extracting file [" + downloadedFilePath + "]: " + str(e))
+      traceback.print_exc(file=sys.stdout)
+   except:
+      log.printError("Error extracting file [" + downloadedFilePath + "]: " + sys.exc_info()[0])
+      traceback.print_exc(file=sys.stdout)
 
 
 def downloadUrlToFile(url, folderPath):

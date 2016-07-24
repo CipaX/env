@@ -6,8 +6,11 @@
 
 #   Change Prompt
 #   ------------------------------------------------------------
-PS1="\[\033[36m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[33;1m\]\w\[\033[m\]\$ " # before reinstall
-PS1='\[\e[0;33m\]\u\[\e[0m\]@\[\e[0;32m\]\h\[\e[0m\]:\[\e[0;31m\]$(pwd)\[\e[0m\] \n\$ '
+function PS1_last_two_dirs()
+{
+   pwd | rev | awk -F / '{print $1,$2}' | rev | sed s_\ _/_
+}
+PS1='\[\e[0;33m\]\u\[\e[0m\]@\[\e[0;32m\]\h\[\e[0m\]:\[\e[0;31m\]$(PS1_last_two_dirs)\[\e[0m\]\$ '
 PS2='\$ '
 
 #   Helper for avoiding duplicates when addind items to PATH

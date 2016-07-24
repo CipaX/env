@@ -17,7 +17,6 @@ alias ls='ls -GFh'                          # Preferred 'ls' implementation
 alias ll='ls -lAp'                          # Preferred 'll' implementation
 alias less='less -FSRXc'                    # Preferred 'less' implementation
 alias which='type -p'                       # Always better than which
-cd() { builtin cd "$@"; ll; }               # Always list directory contents upon 'cd'
 alias subl='~/bin/subl -w'
 alias edit='subl'                           # edit:         Opens any file in sublime editor
 alias f='open -a Finder ./'                 # f:            Opens current directory in MacOS Finder
