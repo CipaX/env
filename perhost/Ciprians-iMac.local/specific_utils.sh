@@ -17,3 +17,10 @@ function photorg()
 {
    ${PHOTORG_CMD} "$@"
 }
+
+function perhost_specific_utils_help()
+{
+   echoH1 "perhost_specific_utils commands"
+   echo "$(echoBold subd) - subtitle download utility"
+   echo "$(echoBold photorg) - photo organization utility - runs immediately in the current dir tree"
+}

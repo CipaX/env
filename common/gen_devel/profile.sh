@@ -6,6 +6,23 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_DEVEL} ]]; then
 
    SMARTPROF_CC_ERR_FILE="/tmp/cmd_err.txt"
 
+   function gen_devel_help()
+   {
+      echoH1 "gen_devel commands"
+      echo "$(echoBold toFileHlErr) - outputs to stdout and to ${SMARTPROF_CC_ERR_FILE}, highlighting errors"
+      echo "$(echoBold cc_err) - opens the ${SMARTPROF_CC_ERR_FILE}, if the previous command returned an error"
+      echo "$(echoBold low_pri)"
+      echo "$(echoBold m)"
+      echo "$(echoBold m4)"
+      echo "$(echoBold m6)"
+      echo "$(echoBold m8)"
+      echo "$(echoBold m10)"
+      echo "$(echoBold m12)"
+      echo "$(echoBold t100) - tail 100 lines"
+      echo "$(echoBold rmc) - remove cores"
+      echo "$(echoBold kct) - kill cleartool"
+   }
+
    function toFileHlErr()
    {
       if [ $# -eq 0 ]; then

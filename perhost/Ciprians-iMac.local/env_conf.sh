@@ -41,3 +41,9 @@ export BLOCKSIZE=1k
 export CLICOLOR=1
 #export LSCOLORS=ExFxBxDxCxegedabagacad    # for light themed terminals
 export LSCOLORS=GxFxCxDxBxegedabagaced    # for dark themed terminals
+
+function perhost_env_conf_help()
+{
+   echoH1 "perhost_env_conf commands"
+   echo "$(echoBold pathPrepend) - Helper for avoiding duplicates when addind items to PATH"
+}

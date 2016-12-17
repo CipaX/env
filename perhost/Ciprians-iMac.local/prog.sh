@@ -4,8 +4,8 @@
 #    PROGRAMMING - GENERAL
 #   ---------------------------------------
 
-alias m='make'
-alias m2='make -j2'
-alias m4='make -j2'
-alias m6='make -j2'
-alias m8='make -j2'
+function perhost_prog_help()
+{
+   echoH1 "perhost_prog commands"
+   echo "no command yet defined"
+}

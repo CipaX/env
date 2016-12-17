@@ -31,3 +31,14 @@ alias ttop="top -R -F -s 10 -o rsize"
 #   my_ps: List processes owned by my user:
 #   ------------------------------------------------------------
 my_ps() { ps $@ -u $USER -o pid,%cpu,%mem,start,time,bsdtime,command ; }
+
+function perhost_pids_help()
+{
+   echoH1 "perhost_pids commands"
+   echo "$(echoBold findPid) - find out the pid of a specified process (also works with /regex/)"
+   echo "$(echoBold memHogsTop) - Find memory hogs with top"
+   echo "$(echoBold memHogsPs) - Find memory hogs with ps"
+   echo "$(echoBold cpuHogs) - Find CPU hogs"
+   echo "$(echoBold ttop) - 'top' invocation to minimize resources"
+   echo "$(echoBold my_ps) - List processes owned by my user"
+}

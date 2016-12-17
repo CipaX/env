@@ -23,3 +23,14 @@ alias cleanupLS="/System/Library/Frameworks/CoreServices.framework/Frameworks/La
 #    screensaverDesktop: Run a screensaver on the Desktop
 #   -----------------------------------------------------------------------------------
 alias screensaverDesktop='/System/Library/Frameworks/ScreenSaver.framework/Resources/ScreenSaverEngine.app/Contents/MacOS/ScreenSaverEngine -background'
+
+function perhost_osinfo_help()
+{
+   echoH1 "perhost_osinfo commands"
+   echo "$(echoBold mountReadWrite) - For use when booted into single-user"
+   echo "$(echoBold cleanupDS) - Recursively delete .DS_Store files"
+   echo "$(echoBold finderShowHidden) - Show hidden files in Finder"
+   echo "$(echoBold finderHideHidden) - Hide hidden files in Finder"
+   echo "$(echoBold cleanupLS) - Clean up LaunchServices to remove duplicates in the "Open With" menu"
+   echo "$(echoBold screensaverDesktop) - Run a screensaver on the Desktop"
+}

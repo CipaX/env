@@ -4,7 +4,7 @@
 #    FILE AND FOLDER MANAGEMENT
 #   -------------------------------
 
-#   cdf:  'Cd's to frontmost window of MacOS Finder
+#   cdf:  cd's to frontmost window of MacOS Finder
 #   ------------------------------------------------------
 cdf () {
     currFolderPath=$( /usr/bin/osascript <<EOT
@@ -43,4 +43,11 @@ extract () {
      else
          echo "'$1' is not a valid file"
      fi
+}
+
+function perhost_files_help()
+{
+   echoH1 "perhost_files commands"
+   echo "$(echoBold cdf) - cd's to frontmost window of MacOS Finder"
+   echo "$(echoBold extract) - Extract most know archives with one command"
 }

@@ -27,6 +27,16 @@ function _smartProfMain()
    else
       echo "### There is no profile for hostname [${HOSTNAME}]."
    fi
+
+   function xx_help()
+   {
+      gen_unix_help
+      gen_devel_help
+
+      if [[ -n "$(type -t perhost_help)" ]]; then
+         perhost_help
+      fi
+   }   
 }
 
 if [[ -z ${SMARTPROF_DIR_ROOT} ]]; then

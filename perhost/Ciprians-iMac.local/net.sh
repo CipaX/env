@@ -28,3 +28,19 @@ ii() {
     #echo -e "\n${RED}DNS Configuration:$NC " ; scutil --dns
     echo
 }
+
+function perhost_net_help()
+{
+   echoH1 "perhost_net commands"
+   echo "$(echoBold myip) - Public facing IP Address"
+   echo "$(echoBold mtnetCons) - Show all open TCP/IP sockets"
+   echo "$(echoBold flushDNS) - Flush out the DNS Cache"
+   echo "$(echoBold lsock) - Display open sockets"
+   echo "$(echoBold lsockU) - Display only open UDP sockets"
+   echo "$(echoBold lsockT) - Display only open TCP sockets"
+   echo "$(echoBold ipInfo0) - Get info on connections for en0"
+   echo "$(echoBold ipInfo1) - Get info on connections for en1"
+   echo "$(echoBold openPorts) - All listening connections"
+   echo "$(echoBold showBlocked) - All ipfw rules inc/ blocked IPs"
+   echo "$(echoBold ii) - Display useful host related informaton"
+}

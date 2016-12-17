@@ -28,3 +28,16 @@ alias DT='tee ~/Desktop/terminalOut.txt'    # DT:           Pipe content to file
 #   lr:  Full Recursive Directory Listing
 #   ------------------------------------------
 alias lr='ls -R | grep ":$" | sed -e '\''s/:$//'\'' -e '\''s/[^-][^\/]*\//--/g'\'' -e '\''s/^/   /'\'' -e '\''s/-/|/'\'' | less'
+
+function perhost_terminal_help()
+{
+   echoH1 "perhost_terminal commands"
+   echo "$(echoBold subl) - opens sublime text"
+   echo "$(echoBold edit) - alias to subl"   
+   echo "$(echoBold f) - Opens current directory in MacOS Finder"
+   echo "$(echoBold path) - Echo all executable Paths"
+   echo "$(echoBold trash) - Moves a file to the MacOS trash"
+   echo "$(echoBold ql) - Opens any file in MacOS Quicklook Preview"
+   echo "$(echoBold DT) - Pipe content to file on MacOS Desktop"
+   echo "$(echoBold lr) - Full Recursive Directory Listing"
+}

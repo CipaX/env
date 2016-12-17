@@ -48,6 +48,23 @@ if [[ -z ${SMARTPROF_DIR_PERHOST_CIP_MAC} ]]; then
 
    #  Aliases
    alias ats='source ~/01-prog/jlg/ATS/env/profile.sh'
+
+   function perhost_help()
+   {
+      perhost_env_conf_help
+      perhost_terminal_help
+      perhost_files_help
+      perhost_search_help
+      perhost_pids_help
+      perhost_net_help
+      perhost_osinfo_help
+      perhost_prog_help
+      perhost_prog_web_help
+      perhost_prog_py_help
+      perhost_prog_ts_help
+      perhost_specific_utils_help
+      perhost_proj_ats_help
+   }
 fi
 
 

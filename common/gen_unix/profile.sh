@@ -4,6 +4,22 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
    export SMARTPROF_DIR_COMMON_GEN_LINUX="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
    alias pp_e_gen_unix="${SMARTPROF_EDITOR} ${BASH_SOURCE[0]} &"
 
+   source "${SMARTPROF_DIR_COMMON_GEN_LINUX}/colors.sh"
+   source "${SMARTPROF_DIR_COMMON_GEN_LINUX}/markup.sh"
+
+   function gen_unix_help()
+   {
+      echoH1 "gen_unix commands"
+      echo "$(echoBold xx) - xx_go.sh"
+      echo "$(echoBold xx_findPid) - find out the pid of a specified process (accepts /regex/)"
+      echo "$(echoBold xx_pathPrepend)"
+      echo "$(echoBold xx_where_func)"
+      echo "$(echoBold ss_pub_key)"
+      echo "$(echoBold pp_copy)"
+      echo "$(echoBold pp_copy_if_newer)"
+      echo "$(echoBold ss_prof)"
+   }
+
    ###########
    # Terminal
    ###########

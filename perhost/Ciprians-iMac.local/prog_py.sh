@@ -21,5 +21,8 @@ export WORKON_HOME=$HOME/.py_venv
 export PROJECT_HOME=$HOME/01-prog/tests/
 source /usr/local/bin/virtualenvwrapper.sh
 
-# make all typescripts from current folder recursively
-alias mts='for f in $(find . -name "*.ts"); do echo "Compiling $f ..."; tsc $f; done'
+function perhost_prog_py_help()
+{
+   echoH1 "perhost_prog_py commands"
+   echo "$(echoBold syspip) - system (not virtualenv) pip"
+}
