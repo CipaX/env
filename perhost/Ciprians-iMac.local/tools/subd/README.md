@@ -21,7 +21,7 @@ pip install Scrapy
 pip install rarfile
 
 ## Add cspy library to the scrapping virtual env
-cd ~/env/perhost/Ciprians-iMac.local/cspy
+cd ~/env/perhost/Ciprians-iMac.local/tools/cspy
 python setup.py develop
 
 ## Unrar
