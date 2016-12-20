@@ -4,28 +4,28 @@ subd
 # General prerequisites
 
 ## virtualenv
-pip install virtualenv
+pip install virtualenv  
 
 ## virtualenvwrapper
-pip install virtualenvwrapper
+pip install virtualenvwrapper  
 
 ## LaunchControl for task scheduling
-http://www.soma-zone.com/LaunchControl/
+http://www.soma-zone.com/LaunchControl/  
 
 
 # Specific prerequisites
 
 ## Make scrapping virtual env
-mkvirtualenv scrapping
-pip install Scrapy
-pip install rarfile
+mkvirtualenv scrapping  
+pip install Scrapy  
+pip install rarfile  
 
 ## Add cspy library to the scrapping virtual env
-cd ~/env/perhost/Ciprians-iMac.local/tools/cspy
-python setup.py develop
+cd ~/env/perhost/Ciprians-iMac.local/tools/cspy  
+python setup.py develop  
 
 ## Unrar
-brew install unrar
+brew install unrar  
 
 
 # Schedule task with LaunchControl
