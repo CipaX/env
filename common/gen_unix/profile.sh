@@ -42,7 +42,7 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
    alias cp='cp -iv'                           # Preferred 'cp' implementation
    alias mv='mv -iv'                           # Preferred 'mv' implementation
    alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
-   alias less='less -FSRXc'                    # Preferred 'less' implementation
+   alias less='less -FSRX'                     # Preferred 'less' implementation
    alias which='type -p'                       # Always better than which
    alias xx='. xx_go.sh'                       # Easy navigation
 
@@ -86,8 +86,8 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
    # Environment variables
    ########################
 
-   export EDITOR=gedit
-   export WINEDITOR=gedit
+   export EDITOR="${SMARTPROF_EDITOR}"
+   export WINEDITOR="${SMARTPROF_EDITOR}"
 
    #######
    # Path

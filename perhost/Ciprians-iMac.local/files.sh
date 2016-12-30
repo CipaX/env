@@ -6,7 +6,8 @@
 
 #   cdf:  cd's to frontmost window of MacOS Finder
 #   ------------------------------------------------------
-cdf () {
+function cdf()
+{
     currFolderPath=$( /usr/bin/osascript <<EOT
         tell application "Finder"
             try
@@ -22,9 +23,24 @@ EOT
     cd "$currFolderPath"
 }
 
+#   cdc:  copies the current directory (pwd) to the clipboard
+#   ------------------------------------------------------
+function cdc()
+{
+    pwd | pbcopy
+}
+
+#   cdp:  changes the current directory by to the value in the clipboard
+#   ------------------------------------------------------
+function cdp()
+{
+    cd "$(pbpaste)"
+}
+
 #   extract:  Extract most know archives with one command
 #   ---------------------------------------------------------
-extract () {
+function extract()
+{
     if [ -f $1 ] ; then
       case $1 in
         *.tar.bz2)   tar xjf $1     ;;
@@ -49,5 +65,7 @@ function perhost_files_help()
 {
    echoH1 "perhost_files commands"
    echo "$(echoBold cdf) - cd's to frontmost window of MacOS Finder"
+   echo "$(echoBold cdc) - copies the current directory (pwd) to the clipboard"
+   echo "$(echoBold cdp) - changes the current directory by to the value in the clipboard"
    echo "$(echoBold extract) - Extract most know archives with one command"
 }

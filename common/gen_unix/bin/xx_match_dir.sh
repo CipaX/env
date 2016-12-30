@@ -2,6 +2,21 @@
 
 BASE="$(pwd)"
 
+function getHome()
+{
+   echo ${HOME}
+}
+
+function getAbsPath()
+{
+   echo $(cd "$1"; pwd)
+}
+
+BASE_GET_FUNC=${SMARTPROF_GO_BASE_GET_FUNC:-'getHome'}
+BASE="$($BASE_GET_FUNC)"
+BASE="$(getAbsPath ${BASE})"
+
+
 if [ "$#" -eq 1 ] && [ "$1" == "-h" ]; then
    _CMD="$(basename $0)"
    echo "usage: ${_CMD} <pattern>"
@@ -35,17 +50,6 @@ elif [ "$#" -eq 0 ]; then
    echo ${BASE}
    exit
 fi
-
-
-function getHome()
-{
-   echo ${HOME}
-}
-
-function getAbsPath()
-{
-   echo $(cd "$1"; pwd)
-}
 
 function getPathCost()
 {

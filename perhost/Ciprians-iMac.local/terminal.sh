@@ -10,13 +10,8 @@ if [ -f $(brew --prefix)/etc/bash_completion ]; then
     . $(brew --prefix)/etc/bash_completion
 fi
 
-alias cp='cp -iv'                           # Preferred 'cp' implementation
-alias mv='mv -iv'                           # Preferred 'mv' implementation
-alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
 alias ls='ls -GFh'                          # Preferred 'ls' implementation
 alias ll='ls -lAp'                          # Preferred 'll' implementation
-alias less='less -FSRXc'                    # Preferred 'less' implementation
-alias which='type -p'                       # Always better than which
 alias subl='~/bin/subl -w'
 alias edit='subl'                           # edit:         Opens any file in sublime editor
 alias f='open -a Finder ./'                 # f:            Opens current directory in MacOS Finder

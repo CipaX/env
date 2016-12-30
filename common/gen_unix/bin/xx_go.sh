@@ -1,7 +1,7 @@
 #!/bin/bash
 
 if [ "$#" -eq 1 ] && [ "$1" == "-h" ]; then
-   _CMD="$(basename $0)"
+   _CMD="$(basename "${BASH_SOURCE[0]}")"
    echo "usage: ${_CMD} <pattern>"
    echo ""
    echo "${_CMD} - matches the given file/directory path pattern within the base directory subtree and changes the directory to the first best path match."

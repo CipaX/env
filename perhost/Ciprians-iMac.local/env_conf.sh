@@ -15,7 +15,8 @@ PS2='\$ '
 
 #   Helper for avoiding duplicates when addind items to PATH
 #   ------------------------------------------------------------
-pathPrepend() {
+function pathPrepend()
+{
     if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
         export PATH=$1:$PATH
     fi
