@@ -12,7 +12,9 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
       echoH1 "gen_unix commands"
       echo "$(echoBold xx) - xx_go.sh"
       echo "$(echoBold xx_findPid) - find out the pid of a specified process (accepts /regex/)"
-      echo "$(echoBold xx_pathPrepend)"
+      echo "$(echoBold xx_genericPathVarPrepend) - Generic helper for avoiding duplicates when prepending items to any path variable separated by \":\""
+      echo "$(echoBold xx_genericPathVarAppend) - Generic helper for avoiding duplicates when appending items to any path variable separated by \":\""
+      echo "$(echoBold xx_pathPrepend) - Helper for avoiding duplicates when prepending items to PATH"
       echo "$(echoBold xx_where_func)"
       echo "$(echoBold ss_pub_key)"
       echo "$(echoBold pp_copy)"
@@ -58,19 +60,71 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
    #   -----------------------------------------------------
    function xx_findPid () { lsof -t -c "$@" ; }
 
+   #   Generic helper for avoiding duplicates when prepending items to any path variable separated by ":"
+   #   ------------------------------------------------------------
+   function xx_genericPathVarPrepend()
+   {
+      if [[ $# -ne 2 ]]; then
+         echo "Syntax: xx_genericPathVarPrepend <VAR_NAME> <PATH_TO_PREPEND>"
+         echo "  Examples:"
+         echo "    xx_genericPathVarPrepend PATH /usr/local/bin"
+         echo "    xx_genericPathVarPrepend LD_LIBRARY_PATH /usr/local/lib"
+      else
+         _VAR_NAME="$1"
+
+         IFS=":" read -a NEW_PATH_PARTS <<< "$2"
+         
+         for (( IDX=${#NEW_PATH_PARTS[@]}-1 ; IDX>=0 ; IDX-- )) ; do
+            NEW_PATH_PART=${NEW_PATH_PARTS[IDX]}
+
+            eval _CRT_VAR_VAL=\$$_VAR_NAME
+
+            if [[ -z $_CRT_VAR_VAL ]]; then
+               eval export $_VAR_NAME="${NEW_PATH_PART}"
+            else
+               if ! echo $_CRT_VAR_VAL | egrep -q "(^|:)${NEW_PATH_PART}($|:)" ; then
+                  eval export $_VAR_NAME="${NEW_PATH_PART}:$_CRT_VAR_VAL"
+               fi
+            fi
+         done
+      fi
+   }
+
+   #   Generic helper for avoiding duplicates when appending items to any path variable separated by ":"
+   #   ------------------------------------------------------------
+   function xx_genericPathVarAppend()
+   {
+      if [[ $# -ne 2 ]]; then
+         echo "Syntax: xx_genericPathVarPrepend <VAR_NAME> <PATH_TO_PREPEND>"
+         echo "  Examples:"
+         echo "    xx_genericPathVarPrepend PATH /usr/local/bin"
+         echo "    xx_genericPathVarPrepend LD_LIBRARY_PATH /usr/local/lib"
+      else
+         _VAR_NAME="$1"
+
+         IFS=":" read -a NEW_PATH_PARTS <<< "$2"
+         
+         for (( IDX=${#NEW_PATH_PARTS[@]}-1 ; IDX>=0 ; IDX-- )) ; do
+            NEW_PATH_PART=${NEW_PATH_PARTS[IDX]}
+
+            eval _CRT_VAR_VAL=\$$_VAR_NAME
+
+            if [[ -z $_CRT_VAR_VAL ]]; then
+               eval export $_VAR_NAME="${NEW_PATH_PART}"
+            else
+               if ! echo $_CRT_VAR_VAL | egrep -q "(^|:)${NEW_PATH_PART}($|:)" ; then
+                  eval export $_VAR_NAME="$_CRT_VAR_VAL:${NEW_PATH_PART}"
+               fi
+            fi
+         done
+      fi
+   }
+
    #   Helper for avoiding duplicates when addind items to PATH
    #   ------------------------------------------------------------
    function xx_pathPrepend()
    {
-      IFS=":" read -a NEW_PATH_PARTS <<< "$1"
-      
-      for (( IDX=${#NEW_PATH_PARTS[@]}-1 ; IDX>=0 ; IDX-- )) ; do
-         NEW_PATH_PART=${NEW_PATH_PARTS[IDX]}
-         
-         if ! echo $PATH | egrep -q "(^|:)${NEW_PATH_PART}($|:)" ; then
-            export PATH=${NEW_PATH_PART}:$PATH
-         fi
-      done
+      xx_genericPathVarPrepend "PATH" "$1"
    }
 
    #   Outputs the script file and line where a function is located

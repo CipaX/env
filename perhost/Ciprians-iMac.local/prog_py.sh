@@ -13,13 +13,16 @@ export ARCHFLAGS="-arch x86_64"
 export PIP_REQUIRE_VIRTUALENV=true           # pip should only run if there is a virtualenv currently activated
 export PIP_DOWNLOAD_CACHE=$HOME/.pip/cache   # cache pip-installed packages to avoid re-downloading
 
-syspip(){
+function syspip()
+{
    PIP_REQUIRE_VIRTUALENV="" pip "$@"
 }
 
 export WORKON_HOME=$HOME/.py_venv
 export PROJECT_HOME=$HOME/01-prog/tests/
 source /usr/local/bin/virtualenvwrapper.sh
+
+xx_pathPrepend "$HOME/miniconda3/bin"
 
 function perhost_prog_py_help()
 {

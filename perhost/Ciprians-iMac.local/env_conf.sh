@@ -13,18 +13,9 @@ function PS1_last_two_dirs()
 PS1='\[\e[0;33m\]\u\[\e[0m\]@\[\e[0;32m\]\h\[\e[0m\]:\[\e[0;31m\]$(PS1_last_two_dirs)\[\e[0m\]\$ '
 PS2='\$ '
 
-#   Helper for avoiding duplicates when addind items to PATH
-#   ------------------------------------------------------------
-function pathPrepend()
-{
-    if ! echo $PATH | egrep -q "(^|:)$1($|:)" ; then
-        export PATH=$1:$PATH
-    fi
-}
-
 #   Set Paths (Homebrew installed binaries at the beginning)
 #   ------------------------------------------------------------
-pathPrepend "/usr/local/bin:~/bin"
+xx_pathPrepend "/usr/local/bin:~/bin"
 
 #   Set Default Editor
 #   ------------------------------------------------------------
@@ -42,6 +33,12 @@ export BLOCKSIZE=1k
 export CLICOLOR=1
 #export LSCOLORS=ExFxBxDxCxegedabagacad    # for light themed terminals
 export LSCOLORS=GxFxCxDxBxegedabagaced    # for dark themed terminals
+
+#   Cuda Setup
+#   ------------------------------------------------------------
+export CUDA_HOME=/usr/local/cuda
+xx_genericPathVarAppend "DYLD_LIBRARY_PATH" "$CUDA_HOME/lib"
+xx_pathPrepend "$CUDA_HOME/bin"
 
 function perhost_env_conf_help()
 {
