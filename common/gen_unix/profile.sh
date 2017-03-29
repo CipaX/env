@@ -37,6 +37,18 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
 
    PS2='\$ '
 
+   ###############
+   # Bash history
+   ###############
+
+   export HISTCONTROL=ignoredups:erasedups  # no duplicate entries
+   export HISTSIZE=100000                   # big big history
+   export HISTFILESIZE=100000               # big big history
+   shopt -s histappend                      # append to history, don't overwrite it
+
+   # After each command, append to the history file and reread it
+   export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+
    ####################
    # Aliases and utils
    ####################
