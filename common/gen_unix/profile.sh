@@ -47,7 +47,13 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
    shopt -s histappend                      # append to history, don't overwrite it
 
    # After each command, append to the history file and reread it
-   export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+   #export PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND$'\n'}history -a; history -c; history -r"
+   # ^^^ commented the line above because it adds 0.5 sec of delay after each command
+   # Also, having new commands popup in the arrow-up history of a terminal may be
+   # confusing.
+
+   # History refresh
+   alias hr='history -r'
 
    ####################
    # Aliases and utils
@@ -298,7 +304,7 @@ if [[ -z ${SMARTPROF_DIR_COMMON_GEN_LINUX} ]]; then
             echo "### We are in ROOT"
 
             # Create an md5 file for the current profile snapshot
-            find . \( ! -regex '.*/\..*' \) | xargs ls -l | grep -v md5sum.txt | eval "$(_universalMd5SumCmd)" > md5sum.txt.tmp
+            find . -print0 \( ! -regex '.*/\..*' \) | xargs -0 ls -l | grep -v md5sum.txt | eval "$(_universalMd5SumCmd)" > md5sum.txt.tmp
             if [ ! -f "md5sum.txt.tmp" ]; then
                echo "### Error: md5sum.txt.tmp was not created."
                return
